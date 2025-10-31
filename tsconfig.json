@@ -7,16 +7,24 @@
       "esnext"
     ],
     "allowJs": true,
-    "skipLibCheck": false,
+    //"skipLibCheck": false,
+    "skipLibCheck": true,
     "strict": true,
     "noEmit": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "module": "esnext",
-    "moduleResolution": "node",
+    // "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
+    //"jsx": "preserve",
+    // add new line below
+    "types": [
+      "react",
+      "react-dom"
+    ],
     "jsx": "preserve",
     "incremental": true,
     "plugins": [
