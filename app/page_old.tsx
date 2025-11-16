@@ -121,11 +121,9 @@ export default function LandingPage() {
               label="Founder's Network"
               items={[
                 { label: "Overview", href: "/founders" },
- //               { label: "Join Network", href: "/founders/network-form" },
-                { label: "Join Network", href: "/founders/join" },  
                 { label: "Mentors", href: "/founders/mentors" },
                 { label: "Investors", href: "/founders/investors" },
-                { label: "Login", href: "/login" },
+                { label: "Join / Login", href: "/login" },
               ]}
             />
             <Dropdown
@@ -406,9 +404,6 @@ export default function LandingPage() {
               <p className="text-gray-400 leading-relaxed">
                 Empowering entrepreneurs to build AI solutions that create positive impact worldwide.
               </p>
-              <nav className="flex flex-col gap-3 mt-4">
-                <a href="/admin" className="text-gray-400 hover:text-white transition-colors duration-200">Admin</a>
-              </nav>
               <p className="text-gray-500 text-sm">
                 © {new Date().getFullYear()} All rights reserved.
               </p>

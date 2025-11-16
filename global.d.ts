@@ -1,4 +1,6 @@
 // Fix missing scheduler/tracing types for React 18
+export {};
+
 declare module 'scheduler/tracing' {
   export interface Interaction {
     id: number
