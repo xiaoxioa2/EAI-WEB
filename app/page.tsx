@@ -224,11 +224,11 @@ export default function LandingPage() {
               </a>
             </div>
 
-            {/* Stats */}
+            {/* Stats - Targets*/}
             <div className="grid grid-cols-3 gap-8 pt-8 border-t border-gray-200">
-              <StatCard number="500+" label="Founders" />
-              <StatCard number="50+" label="Startups" />
-              <StatCard number="$10M+" label="Raised" />
+              <StatCard number="500+" label="Founders (Target)" />
+              <StatCard number="50+" label="To Startups" />
+              <StatCard number="$10M+" label="To Raise" />
             </div>
           </div>
           
