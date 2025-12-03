@@ -1,8 +1,16 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { ChevronDown, Menu, X, ArrowRight, Users, Lightbulb, Target, Heart } from "lucide-react";
-import PasswordProtection from "@/components/PasswordProtection";
+import { ChevronDown, Menu, X, ArrowRight, Users, Lightbulb, Target, Heart, Wrench } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 function Container({ children, className = "" }: React.PropsWithChildren<{ className?: string }>) {
   return <div className={`mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 ${className}`}>{children}</div>;
@@ -13,8 +21,8 @@ function Dropdown({ label, items }: { label: string; items: { label: string; hre
 
   return (
     <div className="relative group">
-      <button 
-        className="inline-flex items-center gap-1 py-2 text-gray-700 hover:text-blue-600 transition-colors duration-200"
+      <button
+        className="inline-flex items-center gap-1 py-2 text-gray-700 hover:text-blue-600 transition-colors duration-200 text-base font-bold"
         onMouseEnter={() => setIsOpen(true)}
         onMouseLeave={() => setIsOpen(false)}
       >
@@ -42,20 +50,22 @@ function Dropdown({ label, items }: { label: string; items: { label: string; hre
   );
 }
 
-function PanelCard({ 
-  title, 
-  subtitle, 
-  href, 
+function PanelCard({
+  title,
+  subtitle,
+  href,
   cta = "Learn more",
   icon: Icon,
-  gradient
-}: { 
-  title: string; 
-  subtitle?: string; 
-  href: string; 
+  gradient,
+  underLinkText
+}: {
+  title: string;
+  subtitle?: string;
+  href: string;
   cta?: string;
   icon: React.ElementType;
   gradient: string;
+  underLinkText?: string;
 }) {
   return (
     <article className="group rounded-2xl border bg-white overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
@@ -68,13 +78,14 @@ function PanelCard({
           {title}
         </h3>
         {subtitle && <p className="mt-2 text-gray-600 leading-relaxed">{subtitle}</p>}
-        <a 
-          href={href} 
+        <a
+          href={href}
           className="mt-4 inline-flex items-center gap-2 text-blue-600 font-medium hover:text-blue-700 transition-colors duration-200 group/link"
         >
           {cta}
           <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform duration-200" />
         </a>
+        {underLinkText && <p className="mt-2 text-sm text-gray-500">{underLinkText}</p>}
       </div>
     </article>
   );
@@ -92,6 +103,7 @@ function StatCard({ number, label }: { number: string; label: string }) {
 export default function LandingPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [donationDialogOpen, setDonationDialogOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -102,7 +114,6 @@ export default function LandingPage() {
   }, []);
 
   return (
-    <PasswordProtection>
       <main className="min-h-screen flex flex-col bg-white">
       {/* Header */}
       <header className={`sticky top-0 z-50 transition-all duration-300 ${
@@ -110,19 +121,26 @@ export default function LandingPage() {
       }`}>
         <Container className="flex items-center justify-between h-16">
           <a href="#" className="flex items-center gap-3 font-bold text-xl text-gray-900 hover:text-blue-600 transition-colors duration-200">
-            <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center">
-              <Lightbulb className="w-6 h-6 text-white" />
+            <div className="h-10 w-10 rounded-full flex items-center justify-center flex-shrink-0 overflow-hidden">
+              <img
+                src="/EAI logo.png"
+                alt="EverythingAI Foundation Logo"
+                className="w-full h-full object-cover object-top"
+                style={{ objectPosition: 'center 30%' }}
+              />
             </div>
-            <span>EverythingAI Foundation</span>
+            <div className="flex flex-col leading-tight">
+              <span>EverythingAI</span>
+              <span>Foundation</span>
+            </div>
           </a>
-          
-          <nav className="hidden lg:flex items-center gap-8 text-sm">
+
+          <nav className="hidden lg:flex items-center gap-8 text-sm ml-12">
             <Dropdown
               label="Founder's Network"
               items={[
                 { label: "Overview", href: "/founders" },
- //               { label: "Join Network", href: "/founders/network-form" },
-                { label: "Join Network", href: "/founders/join" },  
+                { label: "Join Network", href: "/founders/network-form" },
                 { label: "Mentors", href: "/founders/mentors" },
                 { label: "Investors", href: "/founders/investors" },
                 { label: "Login", href: "/login" },
@@ -144,19 +162,15 @@ export default function LandingPage() {
                 { label: "Sponsor", href: "/donate" },
               ]}
             />
-            <a href="#mission" className="text-gray-700 hover:text-blue-600 transition-colors duration-200">Mission</a>
-            <a href="/login" className="text-gray-700 hover:text-blue-600 transition-colors duration-200">Login</a>
-            <a href="/apply" className="text-gray-700 hover:text-blue-600 transition-colors duration-200">Apply</a>
           </nav>
 
           <div className="flex items-center gap-4">
-            <a 
-              href="/donate" 
-              className="hidden sm:inline-flex items-center rounded-xl bg-blue-600 text-white px-6 py-2.5 font-medium hover:bg-blue-700 transition-all duration-200 hover:scale-105 shadow-lg hover:shadow-xl"
-            >
-              Donate
-            </a>
-            
+            <div className="hidden lg:flex items-center gap-8 text-sm">
+              <a href="#mission" className="text-red-600 hover:text-red-700 transition-colors duration-200 font-bold">Mission</a>
+              <a href="/login" className="text-red-600 hover:text-red-700 transition-colors duration-200 font-bold">Login</a>
+              <button onClick={() => setDonationDialogOpen(true)} className="text-red-600 hover:text-red-700 transition-colors duration-200 font-bold">Give</button>
+            </div>
+
             <button
               className="lg:hidden p-2 text-gray-700 hover:text-blue-600 transition-colors duration-200"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -202,29 +216,23 @@ export default function LandingPage() {
             </div>
             
             <div className="flex flex-wrap gap-4">
-              <a 
-                href="/founders/join" 
+              <a
+                href="/founders/join"
                 className="group inline-flex items-center gap-2 rounded-xl bg-blue-600 text-white px-8 py-4 font-semibold text-lg hover:bg-blue-700 transition-all duration-200 hover:scale-105 shadow-lg hover:shadow-xl"
               >
                 JOIN THE NETWORK
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" />
               </a>
-              <a 
-                href="/apply" 
-                className="inline-flex items-center gap-2 rounded-xl border-2 border-blue-600 text-blue-600 px-8 py-4 font-semibold text-lg hover:bg-blue-600 hover:text-white transition-all duration-200 hover:scale-105"
-              >
-                Apply
-              </a>
-              <a 
-                href="/donate" 
+              <button
+                onClick={() => setDonationDialogOpen(true)}
                 className="inline-flex items-center gap-2 rounded-xl border-2 border-purple-600 text-purple-600 px-8 py-4 font-semibold text-lg hover:bg-purple-600 hover:text-white transition-all duration-200 hover:scale-105"
               >
                 <Heart className="w-5 h-5" />
                 Give
-              </a>
+              </button>
             </div>
 
-            {/* Stats - Targets*/}
+            {/* Stats - Targets */}
             <div className="grid grid-cols-3 gap-8 pt-8 border-t border-gray-200">
               <StatCard number="500+" label="Founders (Target)" />
               <StatCard number="50+" label="To Startups" />
@@ -270,6 +278,37 @@ export default function LandingPage() {
         </Container>
       </section>
 
+      {/* Who We Are Section */}
+      <section className="py-20 md:py-32 bg-white">
+        <Container>
+          <div className="max-w-4xl mx-auto space-y-8">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 text-center mb-12">
+              Who We Are?
+            </h2>
+            <div className="space-y-6 text-lg text-gray-700 leading-relaxed">
+              <p>
+                EverythingAI Foundation (
+                <a
+                  href="https://everythingaifoundation.org"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 hover:text-blue-800 underline"
+                >
+                  https://everythingaifoundation.org
+                </a>
+                ) is a Texas-based non-profit organization dedicated to empowering entrepreneurs through innovation in artificial intelligence.
+              </p>
+              <p>
+                We aim to ignite and accelerate tech entrepreneurs with game-changing ideas to achieve
+                the vision of &quot;1 Person, $1 Million, in 1 Year.&quot; This framework reflects our belief that
+                focused innovation, AI-driven efficiency, and an ethical support ecosystem can enable a
+                single founder to build scalable impact in one year.
+              </p>
+            </div>
+          </div>
+        </Container>
+      </section>
+
       {/* Mission Section */}
       <section id="mission" className="py-20 md:py-32 bg-gray-50">
         <Container>
@@ -278,9 +317,13 @@ export default function LandingPage() {
               Our Mission
             </h2>
             <p className="text-xl text-gray-600 leading-relaxed">
-              We believe that artificial intelligence should serve humanity's greatest challenges. Our foundation connects 
-              visionary entrepreneurs with the resources, mentorship, and community they need to build AI solutions that 
-              create positive impact at scale.
+              We believe that artificial intelligence should serve humanity's greatest challenges. Our foundation connects
+              visionary entrepreneurs with the resources, mentorship, and community they need to build AI solutions that
+              create positive impact at scale. We support founders who face challenges in achieving the critical &apos;0 to 1&apos; or &apos;1 to 10&apos;
+              milestones, particularly in high-impact sectors such as <strong>health and wellness</strong>, <strong>energy
+              efficiency</strong>, <strong>environmental sustainability</strong>, and <strong>social innovation</strong>. Our programs prioritize
+              underrepresented entrepreneurs in the technology field, ensuring inclusivity and equal
+              opportunity in innovation.
             </p>
             <div className="grid md:grid-cols-3 gap-8 mt-16">
               <div className="text-center space-y-4">
@@ -322,26 +365,27 @@ export default function LandingPage() {
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <PanelCard 
-              title="Latest News" 
-              subtitle="Stay updated with announcements, success stories, and industry insights" 
+            <PanelCard
+              title="Latest News"
+              subtitle="Stay updated with announcements, success stories, and industry insights"
               href="/news"
               icon={Lightbulb}
               gradient="bg-gradient-to-br from-blue-500 to-blue-600"
+              underLinkText="To be updated"
             />
-            <PanelCard 
-              title="Programs" 
-              subtitle="Cohorts, workshops, mentorship opportunities, and accelerator programs" 
+            <PanelCard
+              title="Accelerators/Programs"
+              subtitle="Cohorts, workshops, mentorship opportunities, and accelerator programs"
               href="/programs"
               icon={Target}
               gradient="bg-gradient-to-br from-purple-500 to-purple-600"
             />
-            <PanelCard 
-              title="Application" 
-              subtitle="Ready to join our community? Start your journey here" 
-              href="/apply" 
+            <PanelCard
+              title="Venture Platforms"
+              subtitle="Ready to join our community? Start your journey here"
+              href="/apply"
               cta="Start application"
-              icon={Users}
+              icon={Wrench}
               gradient="bg-gradient-to-br from-green-500 to-green-600"
             />
             <PanelCard 
@@ -449,7 +493,20 @@ export default function LandingPage() {
           </div>
         </Container>
       </footer>
+
+      <AlertDialog open={donationDialogOpen} onOpenChange={setDonationDialogOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Donation Information</AlertDialogTitle>
+            <AlertDialogDescription>
+              Please contact EverythingAI Foundation (startupmindsco@gmail.com) for donation related request.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogAction>OK</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
       </main>
-    </PasswordProtection>
   );
 }
