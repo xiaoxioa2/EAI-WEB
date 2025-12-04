@@ -241,13 +241,35 @@ export default function LandingPage() {
           </div>
           
           <div className="relative">
-            <div className="aspect-[4/3] rounded-3xl bg-gradient-to-br from-blue-100 to-purple-100 shadow-2xl overflow-hidden">
-              <img 
-                src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg" 
-                alt="AI Innovation" 
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-blue-900/20 to-transparent"></div>
+            <div className="grid grid-cols-2 gap-4 rounded-3xl overflow-hidden shadow-2xl">
+              <div className="aspect-square rounded-2xl overflow-hidden bg-gradient-to-br from-blue-100 to-purple-100">
+                <img
+                  src="/pic1networking.png"
+                  alt="Networking Event"
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                />
+              </div>
+              <div className="aspect-square rounded-2xl overflow-hidden bg-gradient-to-br from-purple-100 to-pink-100">
+                <img
+                  src="/pic2eventpanel.png"
+                  alt="Event Panel Discussion"
+                  className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-300"
+                />
+              </div>
+              <div className="aspect-square rounded-2xl overflow-hidden bg-gradient-to-br from-green-100 to-blue-100">
+                <img
+                  src="/pic3_pitch.png"
+                  alt="Pitch Competition"
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                />
+              </div>
+              <div className="aspect-square rounded-2xl overflow-hidden bg-gradient-to-br from-orange-100 to-red-100">
+                <img
+                  src="/pic4_eafacclerator.png"
+                  alt="EAI Accelerator Program"
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                />
+              </div>
             </div>
             
             {/* Floating Cards */}
