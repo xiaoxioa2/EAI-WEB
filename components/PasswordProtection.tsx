@@ -100,8 +100,11 @@ export default function PasswordProtection({ children }: PasswordProtectionProps
           </form>
 
           <div className="mt-8 pt-6 border-t border-gray-200 text-center">
+            <p className="text-sm text-gray-600 font-medium mb-2">
+              Website is under-development.
+            </p>
             <p className="text-sm text-gray-500">
-              Need access? Contact the EverythingAI Foundation team.
+              For preview, send email: <a href="mailto:startupmindsco@gmail.com" className="text-blue-600 hover:text-blue-700 underline">startupmindsco@gmail.com</a>
             </p>
           </div>
         </div>

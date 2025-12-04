@@ -371,7 +371,6 @@ export default function LandingPage() {
               href="/news"
               icon={Lightbulb}
               gradient="bg-gradient-to-br from-blue-500 to-blue-600"
-              underLinkText="To be updated"
             />
             <PanelCard
               title="Accelerators/Programs"
@@ -382,9 +381,8 @@ export default function LandingPage() {
             />
             <PanelCard
               title="Venture Platforms"
-              subtitle="Ready to join our community? Start your journey here"
+              subtitle="Founders friendly AI powered venture platforms to assist collaborations and improve the business development efficiency under ethical and transparent IP and data protection frameworks."
               href="/apply"
-              cta="Start application"
               icon={Wrench}
               gradient="bg-gradient-to-br from-green-500 to-green-600"
             />
