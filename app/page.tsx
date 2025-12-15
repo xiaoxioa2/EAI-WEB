@@ -149,7 +149,7 @@ export default function LandingPage() {
             <Dropdown
               label="Startup Accelerators"
               items={[
-                { label: "Programs", href: "/programs" },
+                { label: "Overview", href: "/programs" },
                 { label: "Application", href: "/apply" },
                 { label: "FAQs", href: "/programs/faq" },
               ]}
