@@ -150,7 +150,7 @@ export default function LandingPage() {
               label="Startup Accelerators"
               items={[
                 { label: "Overview", href: "/programs" },
-                { label: "Application", href: "/apply" },
+                { label: "Application", href: "/accelerators/apply" },
                 { label: "FAQs", href: "/programs/faq" },
               ]}
             />
