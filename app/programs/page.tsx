@@ -141,7 +141,7 @@ export default function AcceleratorsPage() {
                 { label: "Join Network", href: "/founders/network-form" },
                 { label: "Mentors", href: "/founders/mentors" },
                 { label: "Investors", href: "/founders/investors" },
-                { label: "Login", href: "/login" },
+                { label: "FAQs", href: "/programs/faq" },
               ]}
             />
             <Dropdown

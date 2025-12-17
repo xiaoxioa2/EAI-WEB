@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { ChevronDown, Menu, X, ArrowRight, Users, Lightbulb, Target, Heart, Wrench } from "lucide-react";
+import React, { useState } from "react";
+import { ArrowRight, Users, Lightbulb, Target, Heart, Wrench } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -11,44 +11,9 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-
-function Container({ children, className = "" }: React.PropsWithChildren<{ className?: string }>) {
-  return <div className={`mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 ${className}`}>{children}</div>;
-}
-
-function Dropdown({ label, items }: { label: string; items: { label: string; href: string }[] }) {
-  const [isOpen, setIsOpen] = useState(false);
-
-  return (
-    <div className="relative group">
-      <button
-        className="inline-flex items-center gap-1 py-2 text-gray-700 hover:text-blue-600 transition-colors duration-200 text-base font-bold"
-        onMouseEnter={() => setIsOpen(true)}
-        onMouseLeave={() => setIsOpen(false)}
-      >
-        {label}
-        <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
-      </button>
-      <div 
-        className={`absolute left-0 mt-2 w-64 rounded-xl border bg-white shadow-xl p-2 transition-all duration-200 ${
-          isOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'
-        }`}
-        onMouseEnter={() => setIsOpen(true)}
-        onMouseLeave={() => setIsOpen(false)}
-      >
-        {items.map((item) => (
-          <a 
-            key={item.label} 
-            href={item.href} 
-            className="block rounded-lg px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors duration-150"
-          >
-            {item.label}
-          </a>
-        ))}
-      </div>
-    </div>
-  );
-}
+import { Container } from "@/components/Container";
+import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
 
 function PanelCard({
   title,
@@ -101,106 +66,15 @@ function StatCard({ number, label }: { number: string; label: string }) {
 }
 
 export default function LandingPage() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const [donationDialogOpen, setDonationDialogOpen] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   return (
       <main className="min-h-screen flex flex-col bg-white">
-      {/* Header */}
-      <header className={`sticky top-0 z-50 transition-all duration-300 ${
-        scrolled ? 'bg-white/95 backdrop-blur-md shadow-lg' : 'bg-white/80 backdrop-blur-sm'
-      }`}>
-        <Container className="flex items-center justify-between h-16">
-          <a href="#" className="flex items-center gap-3 font-bold text-xl text-gray-900 hover:text-blue-600 transition-colors duration-200">
-            <div className="h-10 w-10 rounded-full flex items-center justify-center flex-shrink-0 overflow-hidden">
-              <img
-                src="/EAI logo.png"
-                alt="EverythingAI Foundation Logo"
-                className="w-full h-full object-cover object-top"
-                style={{ objectPosition: 'center 30%' }}
-              />
-            </div>
-            <div className="flex flex-col leading-tight">
-              <span>EverythingAI</span>
-              <span>Foundation</span>
-            </div>
-          </a>
-
-          <nav className="hidden lg:flex items-center gap-8 text-sm ml-12">
-            <Dropdown
-              label="Founder's Network"
-              items={[
-                { label: "Overview", href: "/founders" },
-                { label: "Join Network", href: "/founders/network-form" },
-                { label: "Mentors", href: "/founders/mentors" },
-                { label: "Investors", href: "/founders/investors" },
-                { label: "Login", href: "/login" },
-              ]}
-            />
-            <Dropdown
-              label="Startup Accelerators"
-              items={[
-                { label: "Overview", href: "/programs" },
-                { label: "Application", href: "/accelerators/apply" },
-                { label: "FAQs", href: "/programs/faq" },
-              ]}
-            />
-            <Dropdown
-              label="Venture Platforms"
-              items={[
-                { label: "Partners", href: "/partners" },
-                { label: "Platform", href: "/platform" },
-                { label: "Sponsor", href: "/donate" },
-              ]}
-            />
-          </nav>
-
-          <div className="flex items-center gap-4">
-            <div className="hidden lg:flex items-center gap-8 text-sm">
-              <a href="#mission" className="text-red-600 hover:text-red-700 transition-colors duration-200 font-bold">Mission</a>
-              <a href="/login" className="text-red-600 hover:text-red-700 transition-colors duration-200 font-bold">Login</a>
-              <button onClick={() => setDonationDialogOpen(true)} className="text-red-600 hover:text-red-700 transition-colors duration-200 font-bold">Give</button>
-            </div>
-
-            <button
-              className="lg:hidden p-2 text-gray-700 hover:text-blue-600 transition-colors duration-200"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
-          </div>
-        </Container>
-
-        {/* Mobile Menu */}
-        {mobileMenuOpen && (
-          <div className="lg:hidden bg-white border-t shadow-lg">
-            <Container className="py-4 space-y-4">
-              <a href="/founders" className="block py-2 text-gray-700 hover:text-blue-600">Founder's Network</a>
-              <a href="/programs" className="block py-2 text-gray-700 hover:text-blue-600">Startup Accelerators</a>
-              <a href="/partners" className="block py-2 text-gray-700 hover:text-blue-600">Venture Platforms</a>
-              <a href="#mission" className="block py-2 text-gray-700 hover:text-blue-600">Mission</a>
-              <a href="/login" className="block py-2 text-gray-700 hover:text-blue-600">Login</a>
-              <a href="/apply" className="block py-2 text-gray-700 hover:text-blue-600">Apply</a>
-              <a href="/donate" className="block w-full text-center rounded-xl bg-blue-600 text-white px-6 py-3 font-medium mt-4">
-                Donate
-              </a>
-            </Container>
-          </div>
-        )}
-      </header>
+      <Header onDonateClick={() => setDonationDialogOpen(true)} />
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-blue-50 via-white to-purple-50">
-        <div className="absolute inset-0 bg-[url('https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg')] bg-cover bg-center opacity-5"></div>
+      <section className="relative overflow-hidden bg-white">
+        <div className="absolute inset-0 bg-[url('https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg')] bg-cover bg-center opacity-10 blur-md"></div>
         <Container className="py-20 md:py-32 grid lg:grid-cols-2 gap-12 items-center relative">
           <div className="space-y-8">
             <div className="space-y-6">
@@ -271,7 +145,7 @@ export default function LandingPage() {
                 />
               </div>
             </div>
-            
+
             {/* Floating Cards */}
             <div className="absolute -top-6 -left-6 bg-white rounded-2xl p-4 shadow-xl">
               <div className="flex items-center gap-3">
@@ -284,7 +158,7 @@ export default function LandingPage() {
                 </div>
               </div>
             </div>
-            
+
             <div className="absolute -bottom-6 -right-6 bg-white rounded-2xl p-4 shadow-xl">
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center">
@@ -404,7 +278,7 @@ export default function LandingPage() {
             <PanelCard
               title="Venture Platforms"
               subtitle="Founders friendly AI powered venture platforms to assist collaborations and improve the business development efficiency under ethical and transparent IP and data protection frameworks."
-              href="/apply"
+              href="/accelerators/apply"
               icon={Wrench}
               gradient="bg-gradient-to-br from-green-500 to-green-600"
             />
@@ -456,63 +330,7 @@ export default function LandingPage() {
         </Container>
       </section>
 
-      {/* Footer */}
-      <footer className="mt-auto bg-gray-900 text-white">
-        <Container className="py-16">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div className="space-y-4">
-              <div className="flex items-center gap-3">
-                <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center">
-                  <Lightbulb className="w-6 h-6 text-white" />
-                </div>
-                <span className="font-bold text-xl">EverythingAI Foundation</span>
-              </div>
-              <p className="text-gray-400 leading-relaxed">
-                Empowering entrepreneurs to build AI solutions that create positive impact worldwide.
-              </p>
-              <nav className="flex flex-col gap-3 mt-4">
-                <a href="/admin" className="text-gray-400 hover:text-white transition-colors duration-200">Admin</a>
-              </nav>
-              <p className="text-gray-500 text-sm">
-                © {new Date().getFullYear()} All rights reserved.
-              </p>
-            </div>
-            
-            <div className="space-y-4">
-              <h3 className="font-semibold text-lg">Legal</h3>
-              <nav className="flex flex-col gap-3">
-                <a href="/privacy" className="text-gray-400 hover:text-white transition-colors duration-200">Privacy Policy</a>
-                <a href="/terms" className="text-gray-400 hover:text-white transition-colors duration-200">Terms of Use</a>
-                <a href="/competition-rules" className="text-gray-400 hover:text-white transition-colors duration-200">Competition Rules</a>
-              </nav>
-            </div>
-            
-            <div className="space-y-4">
-              <h3 className="font-semibold text-lg">Organization</h3>
-              <nav className="flex flex-col gap-3">
-                <a href="/code-of-conduct" className="text-gray-400 hover:text-white transition-colors duration-200">Code of Conduct</a>
-                <a href="/financials" className="text-gray-400 hover:text-white transition-colors duration-200">Financials</a>
-                <a href="/contact" className="text-gray-400 hover:text-white transition-colors duration-200">Contact</a>
-              </nav>
-            </div>
-            
-            <div className="space-y-4">
-              <h3 className="font-semibold text-lg">Stay Connected</h3>
-              <p className="text-gray-400">Get updates on our latest programs and opportunities</p>
-              <form className="space-y-3" onSubmit={(e) => e.preventDefault()}>
-                <input 
-                  type="email" 
-                  placeholder="Enter your email" 
-                  className="w-full rounded-xl border border-gray-600 bg-gray-800 px-4 py-3 text-white placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all duration-200"
-                />
-                <button className="w-full rounded-xl bg-blue-600 px-4 py-3 font-medium hover:bg-blue-700 transition-all duration-200 hover:scale-105">
-                  Subscribe
-                </button>
-              </form>
-            </div>
-          </div>
-        </Container>
-      </footer>
+      <Footer />
 
       <AlertDialog open={donationDialogOpen} onOpenChange={setDonationDialogOpen}>
         <AlertDialogContent>
