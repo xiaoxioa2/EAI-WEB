@@ -2,14 +2,14 @@
 
 import React from "react";
 import { ArrowRight, Users, TrendingUp, Award, CheckCircle, Download } from "lucide-react";
-
-function Container({ children, className = "" }: React.PropsWithChildren<{ className?: string }>) {
-  return <div className={`mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 ${className}`}>{children}</div>;
-}
+import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
+import { Container } from "@/components/Container";
 
 export default function PartnersPage() {
   return (
     <main className="min-h-screen bg-white">
+      <Header />
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 text-white py-24">
         <div className="absolute inset-0 opacity-10">
@@ -254,6 +254,8 @@ export default function PartnersPage() {
           </div>
         </Container>
       </section>
+
+      <Footer />
     </main>
   );
 }

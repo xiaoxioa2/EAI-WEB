@@ -53,8 +53,8 @@ export function Header({ onDonateClick }: HeaderProps) {
             items={[
               { label: "Overview", href: "/founders" },
               { label: "Join Network", href: "/founders/network-form" },
-              { label: "Mentors", href: "/founders/mentors" },
-              { label: "Investors", href: "/founders/investors" },
+              { label: "Mentors", href: "/founders#experts" },
+              { label: "Investors", href: "/founders#investors" },
               { label: "FAQs", href: "/programs/faq" },
             ]}
           />
