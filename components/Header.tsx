@@ -35,7 +35,7 @@ export function Header({ onDonateClick }: HeaderProps) {
         <a href="/" className="flex items-center gap-3 font-bold text-xl text-gray-900 hover:text-blue-600 transition-colors duration-200">
           <div className="h-10 w-10 rounded-full flex items-center justify-center flex-shrink-0 overflow-hidden">
             <img
-              src="/EAI logo.png"
+              src="/eai_logo.png"
               alt="EverythingAI Foundation Logo"
               className="w-full h-full object-cover object-top"
               style={{ objectPosition: 'center 30%' }}

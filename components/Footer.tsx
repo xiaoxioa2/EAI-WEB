@@ -1,4 +1,3 @@
-import { Lightbulb } from "lucide-react";
 import { Container } from "./Container";
 
 export function Footer() {
@@ -9,7 +8,11 @@ export function Footer() {
           <div className="space-y-4">
             <div className="flex items-center gap-3">
               <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center">
-                <Lightbulb className="w-6 h-6 text-white" />
+                <img
+                  src="/eai_logo.png"
+                  alt="EverythingAI Foundation Logo"
+                  className="w-full h-full object-contain"
+                /> 
               </div>
               <span className="font-bold text-xl">EverythingAI Foundation</span>
             </div>
