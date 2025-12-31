@@ -35,17 +35,35 @@ CREATE TABLE IF NOT EXISTS founders_network_submissions (
 
 ALTER TABLE founders_network_submissions ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY "Anyone can submit to founders network"
-  ON founders_network_submissions
-  FOR INSERT
-  TO anon
-  WITH CHECK (true);
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_policies
+    WHERE tablename = 'founders_network_submissions'
+    AND policyname = 'Anyone can submit to founders network'
+  ) THEN
+    CREATE POLICY "Anyone can submit to founders network"
+      ON founders_network_submissions
+      FOR INSERT
+      TO anon
+      WITH CHECK (true);
+  END IF;
+END $$;
 
-CREATE POLICY "Authenticated users can view all submissions"
-  ON founders_network_submissions
-  FOR SELECT
-  TO authenticated
-  USING (true);
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_policies
+    WHERE tablename = 'founders_network_submissions'
+    AND policyname = 'Authenticated users can view all submissions'
+  ) THEN
+    CREATE POLICY "Authenticated users can view all submissions"
+      ON founders_network_submissions
+      FOR SELECT
+      TO authenticated
+      USING (true);
+  END IF;
+END $$;
 
 CREATE INDEX IF NOT EXISTS idx_founders_network_type ON founders_network_submissions(type);
 CREATE INDEX IF NOT EXISTS idx_founders_network_created ON founders_network_submissions(created_at DESC);

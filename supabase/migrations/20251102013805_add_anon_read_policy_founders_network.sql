@@ -10,8 +10,17 @@
     - Insert policy remains restricted to anon users submitting their own data
 */
 
-CREATE POLICY "Anonymous users can view all submissions"
-  ON founders_network_submissions
-  FOR SELECT
-  TO anon
-  USING (true);
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_policies
+    WHERE tablename = 'founders_network_submissions'
+    AND policyname = 'Anonymous users can view all submissions'
+  ) THEN
+    CREATE POLICY "Anonymous users can view all submissions"
+      ON founders_network_submissions
+      FOR SELECT
+      TO anon
+      USING (true);
+  END IF;
+END $$;

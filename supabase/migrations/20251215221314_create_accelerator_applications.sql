@@ -48,14 +48,32 @@ CREATE TABLE IF NOT EXISTS accelerator_applications (
 
 ALTER TABLE accelerator_applications ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY "Anyone can insert accelerator application"
-  ON accelerator_applications
-  FOR INSERT
-  TO anon
-  WITH CHECK (true);
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_policies
+    WHERE tablename = 'accelerator_applications'
+    AND policyname = 'Anyone can insert accelerator application'
+  ) THEN
+    CREATE POLICY "Anyone can insert accelerator application"
+      ON accelerator_applications
+      FOR INSERT
+      TO anon
+      WITH CHECK (true);
+  END IF;
+END $$;
 
-CREATE POLICY "Anyone can read accelerator applications"
-  ON accelerator_applications
-  FOR SELECT
-  TO anon
-  USING (true);
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_policies
+    WHERE tablename = 'accelerator_applications'
+    AND policyname = 'Anyone can read accelerator applications'
+  ) THEN
+    CREATE POLICY "Anyone can read accelerator applications"
+      ON accelerator_applications
+      FOR SELECT
+      TO anon
+      USING (true);
+  END IF;
+END $$;

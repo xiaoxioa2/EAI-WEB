@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import { ArrowRight, CheckCircle, X, Menu, ChevronDown } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
+export const dynamic = 'force-dynamic';
+
 function Container({ children, className = "" }: React.PropsWithChildren<{ className?: string }>) {
   return <div className={`mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 ${className}`}>{children}</div>;
 }

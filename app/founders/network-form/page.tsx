@@ -5,6 +5,8 @@ import { ArrowLeft, Users, CheckCircle, ArrowRight } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import Link from "next/link";
 
+export const dynamic = 'force-dynamic';
+
 export default function NetworkFormPage() {
   const [formData, setFormData] = useState({
     name: "",
