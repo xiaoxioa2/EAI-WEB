@@ -175,7 +175,7 @@ export default function LandingPage() {
       </section>
 
       {/* Who We Are Section */}
-      <section className="py-20 md:py-32 bg-white">
+      <section id="who-we-are" className="py-20 md:py-32 bg-white">
         <Container>
           <div className="max-w-4xl mx-auto space-y-8">
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 text-center mb-12">
@@ -278,7 +278,7 @@ export default function LandingPage() {
             <PanelCard
               title="Venture Platforms"
               subtitle="Founders friendly AI powered venture platforms to assist collaborations and improve the business development efficiency under ethical and transparent IP and data protection frameworks."
-              href="/accelerators/apply"
+              href="/programs/apply"
               icon={Wrench}
               gradient="bg-gradient-to-br from-green-500 to-green-600"
             />

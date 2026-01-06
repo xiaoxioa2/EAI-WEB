@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/Container";
 import { Header } from "@/components/Header";
@@ -17,6 +17,28 @@ import {
 
 export default function PlatformPage() {
   const [donationDialogOpen, setDonationDialogOpen] = useState(false);
+
+   useEffect(() => {
+    const handleHashScroll = () => {
+      const hash = window.location.hash;
+      if (hash) {
+        const element = document.querySelector(hash);
+        if (element) {
+          setTimeout(() => {
+            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 0);
+        }
+      }
+    };
+
+    handleHashScroll();
+
+    window.addEventListener('hashchange', handleHashScroll);
+
+    return () => {
+      window.removeEventListener('hashchange', handleHashScroll);
+    };
+  }, []);
 
   return (
     <div className="min-h-screen bg-white">
@@ -99,13 +121,13 @@ export default function PlatformPage() {
               className="bg-orange-500 hover:bg-orange-600 text-white rounded-xl px-8 py-6 text-base font-semibold shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105"
               asChild
             >
-              <a href="#platform-details">Explore the Platform</a>
+              <a href="#digital-platform">Explore the Platform</a>
             </Button>
           </div>
         </Container>
       </section>
 
-      <section id="platform-details" className="py-16 lg:py-24 bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900">
+      <section id="digital-platform" className="scroll-mt-20 py-16 lg:py-24 bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900">
         <Container>
           <div className="mb-8 lg:mb-12">
             <h2 className="text-4xl lg:text-5xl font-bold text-white mb-3">
@@ -391,7 +413,7 @@ export default function PlatformPage() {
         </Container>
       </section>
 
-      <section className="py-16 lg:py-24 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+      <section id = "offering" className="py-16 lg:py-24 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
         <Container>
           <div className="mb-12">
             <h2 className="text-4xl lg:text-5xl font-bold text-white mb-4">

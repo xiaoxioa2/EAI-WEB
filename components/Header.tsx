@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Image from "next/image";
 import { Menu, X, User, LogOut } from "lucide-react";
 import { Container } from "./Container";
 import { Dropdown } from "./Dropdown";
@@ -73,14 +72,11 @@ export function Header({ onDonateClick }: HeaderProps) {
     }`}>
       <Container className="flex items-center justify-between h-16">
         <a href="/" className="flex items-center gap-3 font-bold text-xl text-gray-900 hover:text-blue-600 transition-colors duration-200">
-          <div className="h-10 w-10 rounded-full flex items-center justify-center flex-shrink-0 overflow-hidden">
-            <Image
+           <div className="h-10 w-10 rounded-xl flex items-center justify-center flex-shrink-0 overflow-hidden bg-white">
+            <img
               src="/eai_logo.png"
               alt="EverythingAI Foundation Logo"
-              width={40}
-              height={40}
               className="w-full h-full object-contain p-0.5"
-              priority
             />
           </div>
           <div className="flex flex-col leading-tight">
@@ -104,8 +100,8 @@ export function Header({ onDonateClick }: HeaderProps) {
             label="Startup Accelerators"
             items={[
               { label: "Overview", href: "/programs" },
-              { label: "Application", href: "/accelerators/apply" },
-              { label: "FAQs", href: "/programs/faq" },
+              { label: "Application", href: "/programs/apply" },
+              { label: "FAQs", href: "/faq#accelerators" },
             ]}
           />
           <Dropdown
@@ -114,6 +110,7 @@ export function Header({ onDonateClick }: HeaderProps) {
               { label: "Partners", href: "/partners" },
               { label: "Platform", href: "/platform" },
               { label: "Sponsor", href: "/donate" },
+              { label: "FAQs", href: "/faq#venture-platforms" },
             ]}
           />
         </nav>
@@ -121,6 +118,7 @@ export function Header({ onDonateClick }: HeaderProps) {
         <div className="flex items-center gap-4">
           <div className="hidden lg:flex items-center gap-8 text-sm">
             <a href="/#mission" className="text-red-600 hover:text-red-700 transition-colors duration-200 font-bold">Mission</a>
+            <a href="/faq" className="text-red-600 hover:text-red-700 transition-colors duration-200 font-bold">FAQ</a>
 
             {user && profile ? (
               <DropdownMenu>
@@ -222,6 +220,7 @@ export function Header({ onDonateClick }: HeaderProps) {
             <a href="/programs" className="block py-2 text-gray-700 hover:text-blue-600">Startup Accelerators</a>
             <a href="/partners" className="block py-2 text-gray-700 hover:text-blue-600">Venture Platforms</a>
             <a href="/#mission" className="block py-2 text-gray-700 hover:text-blue-600">Mission</a>
+            <a href="/faq" className="block py-2 text-gray-700 hover:text-blue-600">FAQ</a>
             {user && profile ? (
               <>
                 <a href="/dashboard" className="block py-2 text-gray-700 hover:text-blue-600">Dashboard</a>
@@ -238,7 +237,7 @@ export function Header({ onDonateClick }: HeaderProps) {
                 <p className="text-xs text-gray-400 mt-2 px-2">First time here? Sign up to get started!</p>
               </div>
             )}
-            <a href="/accelerators/apply" className="block py-2 text-gray-700 hover:text-blue-600">Apply</a>
+            <a href="/programs/apply" className="block py-2 text-gray-700 hover:text-blue-600">Apply</a>
             <a href="/donate" className="block w-full text-center rounded-xl bg-blue-600 text-white px-6 py-3 font-medium mt-4">
               Donate
             </a>

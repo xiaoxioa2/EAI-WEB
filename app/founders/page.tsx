@@ -2,44 +2,9 @@
 
 import React, { useState } from "react";
 import { ArrowRight, CheckCircle, Users, Network, Lightbulb, Heart, Menu, X, ChevronDown, Target, TrendingUp, MessageCircle, Briefcase, UserCheck, Mail } from "lucide-react";
-
-function Container({ children, className = "" }: React.PropsWithChildren<{ className?: string }>) {
-  return <div className={`mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 ${className}`}>{children}</div>;
-}
-
-function Dropdown({ label, items }: { label: string; items: { label: string; href: string }[] }) {
-  const [isOpen, setIsOpen] = useState(false);
-
-  return (
-    <div className="relative group">
-      <button
-        className="inline-flex items-center gap-1 py-2 text-gray-700 hover:text-blue-600 transition-colors duration-200 text-base font-bold"
-        onMouseEnter={() => setIsOpen(true)}
-        onMouseLeave={() => setIsOpen(false)}
-      >
-        {label}
-        <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
-      </button>
-      <div
-        className={`absolute left-0 mt-2 w-64 rounded-xl border bg-white shadow-xl p-2 transition-all duration-200 ${
-          isOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'
-        }`}
-        onMouseEnter={() => setIsOpen(true)}
-        onMouseLeave={() => setIsOpen(false)}
-      >
-        {items.map((item) => (
-          <a
-            key={item.label}
-            href={item.href}
-            className="block rounded-lg px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors duration-150"
-          >
-            {item.label}
-          </a>
-        ))}
-      </div>
-    </div>
-  );
-}
+import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
+import { Container } from "@/components/Container";
 
 interface FeatureCardProps {
   title: string;
@@ -64,88 +29,9 @@ function FeatureCard({ title, description, icon: Icon, gradient }: FeatureCardPr
 }
 
 export default function FoundersNetworkPage() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
   return (
     <main className="min-h-screen flex flex-col bg-white">
-      {/* Header */}
-      <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md shadow-lg">
-        <Container className="flex items-center justify-between h-16">
-          <a href="/" className="flex items-center gap-3 font-bold text-xl text-gray-900 hover:text-blue-600 transition-colors duration-200">
-            <div className="h-10 w-10 rounded-full flex items-center justify-center flex-shrink-0 overflow-hidden">
-              <img
-                src="/EAI logo.png"
-                alt="EverythingAI Foundation Logo"
-                className="w-full h-full object-cover object-top"
-                style={{ objectPosition: 'center 30%' }}
-              />
-            </div>
-            <div className="flex flex-col leading-tight">
-              <span>EverythingAI</span>
-              <span>Foundation</span>
-            </div>
-          </a>
-
-          <nav className="hidden lg:flex items-center gap-8 text-sm ml-12">
-            <Dropdown
-              label="Founder's Network"
-              items={[
-                { label: "Overview", href: "/founders" },
-                { label: "Join Network", href: "/founders/network-form" },
-                { label: "Mentors", href: "#experts" },
-                { label: "Investors", href: "#investors" },
-                { label: "FAQs", href: "/programs/faq" },
-              ]}
-            />
-            <Dropdown
-              label="Startup Accelerators"
-              items={[
-                { label: "Overview", href: "/programs" },
-                { label: "Application", href: "/accelerators/apply" },
-                { label: "FAQs", href: "/programs/faq" },
-              ]}
-            />
-            <Dropdown
-              label="Venture Platforms"
-              items={[
-                { label: "Partners", href: "/partners" },
-                { label: "Platform", href: "/platform" },
-                { label: "Sponsor", href: "/donate" },
-              ]}
-            />
-          </nav>
-
-          <div className="flex items-center gap-4">
-            <div className="hidden lg:flex items-center gap-8 text-sm">
-              <a href="/#mission" className="text-red-600 hover:text-red-700 transition-colors duration-200 font-bold">Mission</a>
-              <a href="/login" className="text-red-600 hover:text-red-700 transition-colors duration-200 font-bold">Login</a>
-              <a href="/donate" className="text-red-600 hover:text-red-700 transition-colors duration-200 font-bold">Give</a>
-            </div>
-
-            <button
-              className="lg:hidden p-2 text-gray-700 hover:text-blue-600 transition-colors duration-200"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
-          </div>
-        </Container>
-
-        {mobileMenuOpen && (
-          <div className="lg:hidden bg-white border-t shadow-lg">
-            <Container className="py-4 space-y-4">
-              <a href="/founders" className="block py-2 text-gray-700 hover:text-blue-600">Founder's Network</a>
-              <a href="/programs" className="block py-2 text-gray-700 hover:text-blue-600">Startup Accelerators</a>
-              <a href="/partners" className="block py-2 text-gray-700 hover:text-blue-600">Venture Platforms</a>
-              <a href="/#mission" className="block py-2 text-gray-700 hover:text-blue-600">Mission</a>
-              <a href="/login" className="block py-2 text-gray-700 hover:text-blue-600">Login</a>
-              <a href="/donate" className="block w-full text-center rounded-xl bg-blue-600 text-white px-6 py-3 font-medium mt-4">
-                Donate
-              </a>
-            </Container>
-          </div>
-        )}
-      </header>
+      <Header />
 
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-white">
@@ -193,7 +79,7 @@ export default function FoundersNetworkPage() {
       </section>
 
       {/* About Founders Section */}
-      <section className="py-20 md:py-32 bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100">
+      <section id="about-founders" className="py-20 md:py-32 bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100">
         <Container>
           <div className="mb-12">
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
@@ -554,65 +440,7 @@ export default function FoundersNetworkPage() {
         </Container>
       </section>
 
-      {/* Footer */}
-      <footer className="mt-auto bg-gray-900 text-white">
-        <Container className="py-16">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div className="space-y-4">
-              <div className="flex items-center gap-3">
-                <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center">
-                  <Lightbulb className="w-6 h-6 text-white" />
-                </div>
-                <span className="font-bold text-xl">EverythingAI Foundation</span>
-              </div>
-              <p className="text-gray-400 leading-relaxed">
-                Empowering entrepreneurs to build AI solutions that create positive impact worldwide.
-              </p>
-              <div className="text-gray-400 text-sm space-y-1">
-                <p>2100 N Greenville Ave</p>
-                <p>Richardson, TX 75082</p>
-                <p>everythingaifoundation.org</p>
-              </div>
-              <p className="text-gray-500 text-sm">
-                © {new Date().getFullYear()} All rights reserved.
-              </p>
-            </div>
-
-            <div className="space-y-4">
-              <h3 className="font-semibold text-lg">Legal</h3>
-              <nav className="flex flex-col gap-3">
-                <a href="/privacy" className="text-gray-400 hover:text-white transition-colors duration-200">Privacy Policy</a>
-                <a href="/terms" className="text-gray-400 hover:text-white transition-colors duration-200">Terms of Use</a>
-                <a href="/competition-rules" className="text-gray-400 hover:text-white transition-colors duration-200">Competition Rules</a>
-              </nav>
-            </div>
-
-            <div className="space-y-4">
-              <h3 className="font-semibold text-lg">Organization</h3>
-              <nav className="flex flex-col gap-3">
-                <a href="/code-of-conduct" className="text-gray-400 hover:text-white transition-colors duration-200">Code of Conduct</a>
-                <a href="/financials" className="text-gray-400 hover:text-white transition-colors duration-200">Financials</a>
-                <a href="/contact" className="text-gray-400 hover:text-white transition-colors duration-200">Contact</a>
-              </nav>
-            </div>
-
-            <div className="space-y-4">
-              <h3 className="font-semibold text-lg">Stay Connected</h3>
-              <p className="text-gray-400">Get updates on our latest programs and opportunities</p>
-              <form className="space-y-3" onSubmit={(e) => e.preventDefault()}>
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="w-full rounded-xl border border-gray-600 bg-gray-800 px-4 py-3 text-white placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all duration-200"
-                />
-                <button className="w-full rounded-xl bg-blue-600 px-4 py-3 font-medium hover:bg-blue-700 transition-all duration-200 hover:scale-105">
-                  Subscribe
-                </button>
-              </form>
-            </div>
-          </div>
-        </Container>
-      </footer>
+      <Footer />
     </main>
   );
 }

@@ -26,7 +26,7 @@ function DashboardContent() {
           title: 'Apply to Accelerators',
           description: 'Submit your application to join our startup accelerator program',
           icon: TrendingUp,
-          link: '/accelerators/apply',
+          link: '/programs/apply',
         },
         {
           title: 'Join Founder Network',
@@ -96,7 +96,7 @@ function DashboardContent() {
           title: 'Accelerator Cohorts',
           description: 'See companies in our accelerator programs',
           icon: TrendingUp,
-          link: '/accelerators',
+          link: '/programs/cohorts',
         },
         {
           title: 'Investment Opportunities',
