@@ -93,7 +93,7 @@ export function Header({ onDonateClick }: HeaderProps) {
               { label: "Join Network", href: "/founders/network-form" },
               { label: "Mentors", href: "/founders#experts" },
               { label: "Investors", href: "/founders#investors" },
-              { label: "FAQs", href: "/programs/faq" },
+              { label: "FAQs", href: "/faq#founders-network" },
             ]}
           />
           <Dropdown

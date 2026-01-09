@@ -375,17 +375,25 @@ export default function FAQPage() {
                 answer={
                   <div className="space-y-3">
                     <p>
-                      Everything AI Foundation normally do not charge the cohorts in most of the Accelerator programs. When in exceptional condition when the content cost is clearly justified by the benefits it is possible the Foundation will charge the cohorts at discounted price but with options to not in or quit anytime. On the other hand, founders who signed into the program need to commit of engaging and to follow the engagement rules.
+                      Everything AI Foundation generally does not charge cohort participants. In limited cases where specialized content or expert-led programming justifies the cost, a clearly disclosed, discounted fee may apply, with flexible opt-out or withdrawal options. Founders accepted into a program are expected to actively engage, follow participation guidelines, and contribute meaningfully throughout their enrollment.
                     </p>
                   </div>
                 }
               />
               <FAQItem
-                question="What's the difference of Founders who joined the accelerator program and Founders who joined the Founder's network?"
+                question="Can someone be part of both the Founder's Network and the Accelerator Program?"
                 answer={
                   <div className="space-y-3">
                     <p>
-                      Founder's Network is a much more open network which contains founders, experts/mentors, and investors for networking and matched 1-1 pairing to address specific needs for founders no matter it is funding need, talents recruiting need and go-to market need, etc. It is more loosely managed in comparison with founders who joined the Accelerator which are governed by EverythingAI program curriculums and targeted specifically for "1 Founder * 1M * 1Y".
+                      Yes. Accelerator participants have to join the Founder's Network first. The two programs are complementary and can be pursued simultaneously. However, joining the Founder's Network does not result in Accelerator admission. 
+                      <div className="my-2" />  
+                        <a href="/programs" className="text-blue-600 hover:text-blue-700 underline font-semibold">
+                            To apply to Accelerators
+                        </a>
+                       <div className="my-2" />  
+                        <a href="/founders/join" className="text-blue-600 hover:text-blue-700 underline font-semibold">
+                           To join Founder's Network
+                        </a>
                     </p>
                   </div>
                 }
@@ -444,17 +452,7 @@ export default function FAQPage() {
                 }
               />
               <FAQItem
-                question="By joining the founder's network, do founders automatically qualify for the accelerator programs?"
-                answer={
-                  <div className="space-y-3">
-                    <p>
-                      Yes. Only founders who joined Founder's Network can apply for accelerator programs offered by EverythingAI Foundation. But not guarantee every application will be granted for limited resource availability.
-                    </p>
-                  </div>
-                }
-              />
-              <FAQItem
-                question="Who can apply to join Founder's Network as Expert or Mentor"
+                question="Who can apply to join Founder's Network as Expert or Mentor?"
                 answer={
                   <div className="space-y-3">
                     <p>We especially value expertise in:</p>
@@ -488,11 +486,14 @@ export default function FAQPage() {
                 }
               />
               <FAQItem
-                question="What is expert role in Founder's Network"
+                question="What is expert role in Founder's Network?"
                 answer={
                   <div className="space-y-3">
                     <p>
-                      Joined expert in Founder's Network will be automatically matched 1x1 or 1xn with our founders to establish a 12-month mentoring relationship through periodic or need based meetings or office hours. Mentor will help founder to identify major gaps and leverage the infrastructure offered by EverythingAI foundation to get there.
+                      More info in: 
+                      <a href="/founders#our-network-of-experts" className="text-blue-600 hover:text-blue-700 font-semibold underline">
+                        "Our Network of Experts" section in Founder's Network Page
+                      </a>
                     </p>
                   </div>
                 }
@@ -502,7 +503,10 @@ export default function FAQPage() {
                 answer={
                   <div className="space-y-3">
                     <p>
-                      Flexible. Totally depends on matching Founder's need and mutually agreed time. Expert will be able to logging hours spent through our website system to receive reward from the donation received.
+                      Flexible. More info in: 
+                      <a href="/founders#our-network-of-experts" className="text-blue-600 hover:text-blue-700 font-semibold underline">
+                        "Our Network of Experts" section in Founder's Network Page
+                      </a>
                     </p>
                   </div>
                 }
@@ -547,7 +551,7 @@ export default function FAQPage() {
                 }
               />
               <FAQItem
-                question="Who can apply to join Founder's Network as investor"
+                question="Who can apply to join Founder's Network as investor?"
                 answer={
                   <div className="space-y-3">
                     <p>
@@ -578,7 +582,7 @@ export default function FAQPage() {
                 }
               />
               <FAQItem
-                question="What is Investor role in Founder's Network"
+                question="What is Investor role in Founder's Network?"
                 answer={
                   <div className="space-y-3">
                     <p>
