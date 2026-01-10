@@ -7,5 +7,5 @@ export default function ClientLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  return <AuthProvider>{children}</AuthProvider>;
 }

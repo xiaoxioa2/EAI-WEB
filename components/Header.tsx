@@ -129,7 +129,6 @@ export function Header({ onDonateClick }: HeaderProps) {
                         {getInitials(profile.full_name)}
                       </AvatarFallback>
                     </Avatar>
-                    <span className="text-sm">{profile.full_name || 'User'}</span>
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-56">

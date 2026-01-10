@@ -19,13 +19,27 @@ interface AuthContextType {
   user: User | null;
   profile: Profile | null;
   loading: boolean;
+  initialized: boolean;
   signUp: (email: string, password: string, role: string, fullName?: string) => Promise<{ error: any; session: any }>;
   signIn: (email: string, password: string) => Promise<{ error: any }>;
   signOut: () => Promise<void>;
   updateProfile: (updates: Partial<Profile>) => Promise<{ error: any }>;
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+const [initialized, setInitialized] = useState(false);
+
+const defaultContextValue: AuthContextType = {
+  user: null,
+  profile: null,
+  loading: true,
+  initialized: false,
+  signUp: async () => ({ error: { message: 'Auth not initialized' }, session: null }),
+  signIn: async () => ({ error: { message: 'Auth not initialized' } }),
+  signOut: async () => {},
+  updateProfile: async () => ({ error: { message: 'Auth not initialized' } }),
+};
+
+const AuthContext = createContext<AuthContextType>(defaultContextValue);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
@@ -40,6 +54,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       } else {
         setLoading(false);
       }
+    // AUTH SYSTEM IS NOW INITIALIZED
+    setInitialized(true);
     });
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
@@ -57,6 +73,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return () => subscription.unsubscribe();
   }, []);
 
+  useEffect(() => {
+  if (!initialized) return;
+
+  console.log('[AUTH STATE]', {
+    initialized,
+    loading,
+    userId: user?.id,
+    email: user?.email,
+    hasProfile: !!profile,
+    });
+  }, [initialized, loading, user, profile]);
+
   const loadProfile = async (userId: string) => {
     try {
       const { data, error } = await supabase
@@ -72,7 +100,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         return;
       }
 
-       if (!data) {
+      if (!data) {
         console.warn('No profile found for user:', userId);
         // Profile doesn't exist, try to create a default one
         const { data: user } = await supabase.auth.getUser();
@@ -112,48 +140,32 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         password,
         options: {
           emailRedirectTo: `${window.location.origin}/dashboard`,
+          data: {
+            role,
+            full_name: fullName || null,
+          }
         }
       });
 
-      if (authError) return { error: authError, session: null };
-
-      if (authData.user) {
-          // Use upsert to handle both trigger creation and manual creation
-        const { error: profileError } = await supabase
-          .from('profiles')
-          .upsert({
-            id: authData.user.id,
-            email: authData.user.email,
-            role,
-            full_name: fullName || null,
-          }, {
-            onConflict: 'id'
-          });
-
-        if (profileError) {
-          console.error('Profile creation error:', profileError);
-          return { error: profileError, session: null };
-        }
-        
-        // If no session but user exists and is confirmed, sign in immediately
-        if (!authData.session && authData.user.confirmed_at) {
-          const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
-            email,
-            password,
-          });
-
-          if (signInError) {
-            console.error('Auto sign-in error:', signInError);
-            return { error: signInError, session: null };
-          }
-
-          return { error: null, session: signInData.session };
-        }
+      if (authError) {
+        return { error: authError, session: null };
       }
 
-      return { error: null, session: authData.session };
+      if (authData.session) {
+        return { error: null, session: authData.session };
+      }
+
+      if (authData.user && !authData.session) {
+        return {
+          error: {
+            message: 'Please check your email to confirm your account before signing in.'
+          },
+          session: null
+        };
+      }
+
+      return { error: { message: 'Signup failed - no user created' }, session: null };
     } catch (error) {
-      console.error('Signup error:', error);
       return { error, session: null };
     }
   };
@@ -185,35 +197,24 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return { error };
   };
 
+  const contextValue = {
+    user,
+    profile,
+    loading,
+    initialized,
+    signUp,
+    signIn,
+    signOut,
+    updateProfile,
+  };
+
   return (
-    <AuthContext.Provider
-      value={{
-        user,
-        profile,
-        loading,
-        signUp,
-        signIn,
-        signOut,
-        updateProfile,
-      }}
-    >
+    <AuthContext.Provider value={contextValue}>
       {children}
     </AuthContext.Provider>
   );
 }
 
 export function useAuth() {
-  const context = useContext(AuthContext);
-  if (context === undefined) {
-    return {
-      user: null,
-      profile: null,
-      loading: true,
-      signUp: async () => ({ error: null, session: null }),
-      signIn: async () => ({ error: null }),
-      signOut: async () => {},
-      updateProfile: async () => ({ error: null }),
-    };
-  }
-  return context;
+  return useContext(AuthContext);
 }

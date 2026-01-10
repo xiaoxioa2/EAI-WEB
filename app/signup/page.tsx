@@ -69,16 +69,32 @@ export default function SignupPage() {
 
     setLoading(true);
 
+    console.log('[DEBUG PAGE] Starting signup...');
     const result = await signUp(email, password, role, fullName);
 
+    console.log('[DEBUG PAGE] Signup result:', {
+      hasError: !!result.error,
+      hasSession: !!result.session,
+      errorMessage: result.error?.message
+    });
+
     if (result.error) {
-      setError(result.error.message);
+      console.log('[DEBUG PAGE] Got error:', result.error);
+      // Check if it's an email confirmation error
+      if (result.error.message?.toLowerCase().includes('email') ||
+          result.error.message?.toLowerCase().includes('confirm')) {
+        setSuccess('Account created! Please check your email to confirm your account before signing in.');
+      } else {
+        setError(result.error.message || 'An error occurred during signup');
+      }
       setLoading(false);
     } else if (result.session) {
       // User is immediately logged in (email confirmation disabled)
+      console.log('[DEBUG PAGE] Got session, redirecting to dashboard...');
       router.push('/dashboard');
     } else {
-      // Email confirmation required
+      // No error and no session - this shouldn't happen with email confirmation disabled
+      console.log('[DEBUG PAGE] No error and no session - showing email confirmation message');
       setSuccess('Account created! Please check your email to confirm your account before signing in.');
       setLoading(false);
     }
