@@ -236,7 +236,7 @@ export default function PartnersPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
-                href="/contact"
+                href="mailto:info@everythingaifoundation.org"
                 className="inline-flex items-center gap-2 bg-white text-blue-900 px-8 py-4 rounded-xl font-semibold text-lg hover:bg-blue-50 transition-all duration-200"
               >
                 Get in Touch

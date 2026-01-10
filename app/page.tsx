@@ -337,7 +337,7 @@ export default function LandingPage() {
           <AlertDialogHeader>
             <AlertDialogTitle>Donation Information</AlertDialogTitle>
             <AlertDialogDescription>
-              Please contact EverythingAI Foundation (startupmindsco@gmail.com) for donation related request.
+              Please contact EverythingAI Foundation (info@everythingaifoundation.org) for donation related request.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

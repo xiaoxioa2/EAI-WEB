@@ -88,7 +88,7 @@ export function Footer() {
             <nav className="flex flex-col gap-3">
               <a href="/code-of-conduct" className="text-gray-400 hover:text-white transition-colors duration-200">Code of Conduct</a>
               <a href="/financials" className="text-gray-400 hover:text-white transition-colors duration-200">Financials</a>
-              <a href="/contact" className="text-gray-400 hover:text-white transition-colors duration-200">Contact</a>
+              <a href="mailto:info@everythingaifoundation.org" className="text-gray-400 hover:text-white transition-colors duration-200">Contact</a>
             </nav>
           </div>
 
