@@ -26,8 +26,6 @@ interface AuthContextType {
   updateProfile: (updates: Partial<Profile>) => Promise<{ error: any }>;
 }
 
-const [initialized, setInitialized] = useState(false);
-
 const defaultContextValue: AuthContextType = {
   user: null,
   profile: null,
@@ -43,23 +41,26 @@ const AuthContext = createContext<AuthContextType>(defaultContextValue);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
+  const [session, setSession] = useState<any>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
+  const [initialized, setInitialized] = useState(false);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
       setUser(session?.user ?? null);
       if (session?.user) {
         loadProfile(session.user.id);
       } else {
         setLoading(false);
       }
-    // AUTH SYSTEM IS NOW INITIALIZED
     setInitialized(true);
     });
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       (async () => {
+        setSession(session);
         setUser(session?.user ?? null);
         if (session?.user) {
           await loadProfile(session.user.id);
@@ -73,6 +74,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return () => subscription.unsubscribe();
   }, []);
 
+    useEffect(() => {
+    console.log('[AUTH] user:', user);
+    console.log('[AUTH] session:', session);
+  }, [user, session]);
+  
   useEffect(() => {
   if (!initialized) return;
 
