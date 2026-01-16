@@ -66,12 +66,12 @@ export function Footer() {
             <p className="text-gray-400 leading-relaxed">
               Empowering entrepreneurs to build AI solutions that create positive impact worldwide.
             </p>
-            <nav className="flex flex-col gap-3 mt-4">
-              <a href="/admin" className="text-gray-400 hover:text-white transition-colors duration-200">Admin</a>
-            </nav>
-            <p className="text-gray-500 text-sm">
-              © {new Date().getFullYear()} All rights reserved.
-            </p>
+        <div className="text-gray-500 text-xs leading-relaxed space-y-1 mt-4">
+              <p>EverythingAI Foundation is a nonprofit organization recognized as tax-exempt under Section 501(c)(3) of the Internal Revenue Code.</p>
+              <p>Contributions are tax-deductible to the extent permitted by law.</p>
+              <p>Based in Texas, United States.</p>
+              <p className="mt-2">© {new Date().getFullYear()} EverythingAI Foundation. All rights reserved.</p>
+            </div>
           </div>
 
           <div className="space-y-4">
@@ -79,7 +79,7 @@ export function Footer() {
             <nav className="flex flex-col gap-3">
               <a href="/privacy" className="text-gray-400 hover:text-white transition-colors duration-200">Privacy Policy</a>
               <a href="/terms" className="text-gray-400 hover:text-white transition-colors duration-200">Terms of Use</a>
-              <a href="/competition-rules" className="text-gray-400 hover:text-white transition-colors duration-200">Competition Rules</a>
+              <a href="/responsible-ai" className="text-gray-400 hover:text-white transition-colors duration-200">Responsible AI</a>
             </nav>
           </div>
 
