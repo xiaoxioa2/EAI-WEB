@@ -77,17 +77,17 @@ export function Footer() {
           <div className="space-y-4">
             <h3 className="font-semibold text-lg">Legal</h3>
             <nav className="flex flex-col gap-3">
-              <a href="/privacy" className="text-gray-400 hover:text-white transition-colors duration-200">Privacy Policy</a>
-              <a href="/terms" className="text-gray-400 hover:text-white transition-colors duration-200">Terms of Use</a>
-              <a href="/responsible-ai" className="text-gray-400 hover:text-white transition-colors duration-200">Responsible AI</a>
+              <a href="/info/privacy" className="text-gray-400 hover:text-white transition-colors duration-200">Privacy Policy</a>
+              <a href="/info/terms" className="text-gray-400 hover:text-white transition-colors duration-200">Terms of Use</a>
+              <a href="/info/responsible-ai" className="text-gray-400 hover:text-white transition-colors duration-200">Responsible AI</a>
             </nav>
           </div>
 
           <div className="space-y-4">
             <h3 className="font-semibold text-lg">Organization</h3>
             <nav className="flex flex-col gap-3">
-              <a href="/code-of-conduct" className="text-gray-400 hover:text-white transition-colors duration-200">Code of Conduct</a>
-              <a href="/financials" className="text-gray-400 hover:text-white transition-colors duration-200">Financials</a>
+              <a href="/info/code-of-conduct" className="text-gray-400 hover:text-white transition-colors duration-200">Code of Conduct</a>
+              <a href="/info/financials" className="text-gray-400 hover:text-white transition-colors duration-200">Financials</a>
               <a href="mailto:info@everythingaifoundation.org" className="text-gray-400 hover:text-white transition-colors duration-200">Contact</a>
             </nav>
           </div>
