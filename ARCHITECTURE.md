@@ -11,68 +11,66 @@ This project contains **two distinct applications** that share authentication an
 
 ```
 app/
-├── (marketing)/              # PUBLIC MARKETING SITE
-│   ├── layout.tsx           # Marketing layout with Header/Footer
-│   ├── page.tsx             # Homepage
-│   ├── programs/            # Programs overview (public)
-│   ├── partners/            # Partners page
-│   ├── faq/                 # FAQ
-│   ├── info/                # Legal & informational pages
-│   │   ├── terms/
-│   │   ├── privacy/
-│   │   ├── code-of-conduct/
-│   │   ├── responsible-ai/
-│   │   └── financials/
-│   └── donate/
+├── layout.tsx               # Root layout with Header/Footer
+├── page.tsx                 # Homepage
+├── programs/                # Programs overview (public)
+│   ├── page.tsx            # Programs landing page
+│   └── apply/              # Accelerator application
+│       └── page.tsx
+├── partners/                # Partners page
+├── faq/                     # FAQ
+├── donate/                  # Donation page
+├── platform/                # Platform info
+├── preview-info/            # Preview information
 │
-├── (auth)/                   # AUTHENTICATION FLOWS (Public)
+├── founders/                # Founder-related public pages
+│   ├── page.tsx            # Founders landing page
+│   ├── join/               # Founder network info
+│   │   └── page.tsx
+│   └── network-form/       # Founder application form
+│       └── page.tsx
+│
+├── info/                    # Legal & informational pages
+│   ├── terms/
+│   ├── privacy/
+│   ├── code-of-conduct/
+│   ├── responsible-ai/
+│   └── financials/
+│
+├── (auth)/                  # AUTHENTICATION FLOWS (Public)
 │   ├── login/
+│   │   └── page.tsx
 │   └── signup/
+│       └── page.tsx
 │
-├── (applications)/          # PUBLIC APPLICATION FORMS
-│   ├── founders/
-│   │   ├── join/            # Founder network info
-│   │   └── network-form/    # Founder application
-│   └── programs/
-│       └── apply/           # Accelerator application
-│
-├── (portals)/               # PROTECTED MEMBER PORTALS
-│   ├── layout.tsx           # Shared portal layout + auth check
+├── (portals)/              # PROTECTED MEMBER PORTALS
+│   ├── dashboard/          # Universal dashboard (role-based)
+│   │   └── page.tsx
+│   ├── profile/            # User profile management
+│   │   └── page.tsx
+│   ├── admin/              # Admin portal
+│   │   └── page.tsx
 │   │
-│   ├── dashboard/           # Universal dashboard (role-based)
-│   ├── profile/             # User profile management
+│   ├── founder_portal/     # FOUNDER PORTAL (Future)
+│   │   └── README.md
 │   │
-│   ├── founder_login/       # FOUNDER PORTAL (Future)
-│   │   ├── dashboard/
-│   │   ├── profile/
-│   │   ├── matching/
-│   │   ├── blog/
-│   │   └── rooms/
+│   ├── expert_portal/      # EXPERT PORTAL (Future)
+│   │   └── README.md
 │   │
-│   ├── mentor_portal/       # MENTOR PORTAL (Future)
-│   │   ├── dashboard/
-│   │   ├── mentees/
-│   │   └── sessions/
-│   │
-│   └── investor_portal/     # INVESTOR PORTAL (Future)
-│       ├── dashboard/
-│       ├── portfolio/
-│       └── deals/
-│
-└── admin/                   # ADMIN AREA (Protected)
-    └── page.tsx
+│   └── investor_portal/    # INVESTOR PORTAL (Future)
+│       └── README.md
 
 components/
-├── marketing/               # Marketing-specific components
-│   ├── Header.tsx
-│   ├── Footer.tsx
-│   └── ...
+├── Header.tsx               # Site header
+├── Footer.tsx               # Site footer
+├── ClientLayout.tsx         # Client-side layout wrapper
+├── ProtectedRoute.tsx       # Auth protection wrapper
 │
 ├── portals/                 # Portal-specific components
 │   ├── shared/              # Used across all portals
-│   ├── founder/             # Founder-specific (for founder_login portal)
-│   ├── mentor/              # Mentor-specific (for mentor_portal)
-│   └── investor/            # Investor-specific (for investor_portal)
+│   ├── founder/             # Founder-specific
+│   ├── expert/              # Expert-specific
+│   └── investor/            # Investor-specific
 │
 └── ui/                      # Shared UI components (shadcn/ui)
 ```
@@ -83,25 +81,27 @@ components/
 
 Route groups using `(groupName)` syntax create **logical separation without affecting URLs**.
 
-- `(marketing)` - Public pages for visitors
-- `(portals)` - Protected pages requiring authentication
-- `(auth)` - Authentication flows
-- `(applications)` - Public application forms
+- **Root level** - Public marketing pages (default, no route group needed)
+- `(auth)` - Authentication flows (login, signup)
+- `(portals)` - Protected member portals
 
 **Benefits:**
 - Each group can have its own layout
-- URLs remain clean (no `marketing` or `portals` in URL)
+- URLs remain clean (no group name in URL)
 - Clear separation of concerns
+- Minimal restructuring needed for existing marketing pages
+
+**Note:** Application forms currently reside at root level (`app/founders/`, `app/programs/apply/`) and will be moved to an `(apply)` route group when needed for better organization.
 
 ### 2. Separation of Concerns
 
 | Concern | Location | Protection |
 |---------|----------|------------|
-| Marketing content | `app/(marketing)/` | Public |
+| Marketing content | `app/` (root level) | Public |
 | Auth flows | `app/(auth)/` | Public |
-| Application forms | `app/(applications)/` | Public (but create records) |
+| Application forms | `app/founders/`, `app/programs/apply/` | Public (but create records) |
 | Member portals | `app/(portals)/` | Protected by `ProtectedRoute` |
-| Admin tools | `app/admin/` | Protected (admin only) |
+| Admin portal | `app/(portals)/admin/` | Protected (admin only) |
 
 ### 3. Middleware for Role-Based Access
 
@@ -113,19 +113,19 @@ Route groups using `(groupName)` syntax create **logical separation without affe
 
 ### 4. Component Organization
 
-**Marketing Components** (`components/marketing/`)
-- Used only in marketing site
-- No authentication dependencies
-- Focus on lead generation and information
+**Root Components** (`components/`)
+- Site-wide components (Header, Footer, etc.)
+- Shared utilities and wrappers
+- No marketing-specific folder needed
 
 **Portal Components** (`components/portals/`)
 - Used in authenticated portals
 - Role-aware
 - Feature-rich, interactive
 
-**Shared Components** (`components/ui/`)
+**Shared UI Components** (`components/ui/`)
 - Design system components (shadcn/ui)
-- Used across both marketing and portals
+- Used across entire site
 
 ## Development Workflow
 
@@ -133,8 +133,8 @@ Route groups using `(groupName)` syntax create **logical separation without affe
 
 ```bash
 # Files to modify:
-app/(marketing)/**
-components/marketing/**
+app/**  (root level pages)
+components/**  (shared components)
 ```
 
 **Safe to change:**
@@ -148,25 +148,25 @@ components/marketing/**
 - User dashboards
 - Authentication flows
 
-### Working on Founder's Network Portal
+### Working on Member Portals
 
 ```bash
 # Files to modify:
-app/founder_login/**
-components/portals/founder/**
-lib/services/founder/**
+app/(portals)/**
+components/portals/**
+lib/services/**
 ```
 
 **Safe to change:**
-- Founder portal features
-- Founder-specific UI
-- Matching algorithms
-- Blog/vlog functionality
+- Portal features
+- Portal-specific UI
+- Business logic
+- Role-based functionality
 
 **Will NOT affect:**
 - Marketing pages
-- Other portal types (mentor, investor)
-- Authentication system
+- Other portal types
+- Authentication system (unless explicitly modifying auth)
 
 ### Working on Database
 
@@ -206,7 +206,7 @@ When adding new portal features:
 
 1. **Create portal directory:**
    ```bash
-   mkdir -p app/founder_login/new-feature
+   mkdir -p app/(portals)/founder_portal/new-feature
    ```
 
 2. **Add components:**
@@ -226,7 +226,7 @@ When adding new portal features:
    ```
 
 5. **Update dashboard links:**
-   - Modify `app/dashboard/page.tsx` to add new feature link
+   - Modify `app/(portals)/dashboard/page.tsx` to add new feature link
 
 ## Testing Strategy
 
@@ -258,27 +258,33 @@ When adding new portal features:
 ## FAQ for Developers
 
 **Q: Where do I add a new marketing page?**
-A: `app/new-page/page.tsx`
+A: `app/new-page/page.tsx` (at root level)
 
-**Q: Where do I add a new founder portal feature?**
-A: `app/founder_login/new-feature/page.tsx`
+**Q: Where do I add a new portal feature?**
+A: `app/(portals)/portal_name/new-feature/page.tsx`
+
+**Q: Where do authentication pages go?**
+A: `app/(auth)/page-name/page.tsx` (e.g., login, signup, password-reset)
+
+**Q: Where do application forms go?**
+A: Currently at root level: `app/founders/network-form/page.tsx`, `app/programs/apply/page.tsx`. These will be moved to an `(apply)` route group when needed.
 
 **Q: Will changing marketing pages affect portals?**
-A: No, they're completely separated by route groups and layouts.
+A: No, they're completely separated. Marketing is at root level, portals are in `(portals)` route group.
 
 **Q: Can I share components between marketing and portals?**
-A: Yes, use `components/ui/` for shared UI components. Keep domain-specific components separate.
+A: Yes, use `components/ui/` for shared UI components. Keep portal-specific components in `components/portals/`.
 
 **Q: How do I add a new user role?**
 A:
 1. Update `user_profiles` table enum
 2. Add role configuration in dashboard
-3. Create portal directory in `app/new-role_portal/`
+3. Create portal directory in `app/(portals)/new_role_portal/`
 4. Update middleware for role-based routing
 
 **Q: Should I create separate projects for each portal?**
 A: No! Keep them in one project because:
 - Shared authentication
-- Cross-portal interactions (founder ↔ mentor ↔ investor)
+- Cross-portal interactions (founder ↔ expert ↔ investor)
 - Unified database
 - Consistent design system

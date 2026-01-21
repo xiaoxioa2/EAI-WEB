@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '@/contexts/AuthContext';
@@ -42,7 +42,7 @@ const roles = [
 
 export default function SignupPage() {
   const router = useRouter();
-  const { signUp } = useAuth();
+  const { signUp, user, initialized } = useAuth();
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -51,6 +51,13 @@ export default function SignupPage() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
+
+  // Redirect if already authenticated
+  useEffect(() => {
+    if (initialized && user) {
+      router.push('/dashboard');
+    }
+  }, [initialized, user, router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -69,33 +76,41 @@ export default function SignupPage() {
 
     setLoading(true);
 
-    console.log('[DEBUG PAGE] Starting signup...');
-    const result = await signUp(email, password, role, fullName);
+    try {
+      console.log('[DEBUG PAGE] Starting signup...');
+      const result = await signUp(email, password, role, fullName);
 
-    console.log('[DEBUG PAGE] Signup result:', {
-      hasError: !!result.error,
-      hasSession: !!result.session,
-      errorMessage: result.error?.message
-    });
+      console.log('[DEBUG PAGE] Signup result:', {
+        hasError: !!result.error,
+        hasSession: !!result.session,
+        errorMessage: result.error?.message
+      });
 
-    if (result.error) {
-      console.log('[DEBUG PAGE] Got error:', result.error);
-      // Check if it's an email confirmation error
-      if (result.error.message?.toLowerCase().includes('email') ||
-          result.error.message?.toLowerCase().includes('confirm')) {
-        setSuccess('Account created! Please check your email to confirm your account before signing in.');
+      if (result.error) {
+        console.log('[DEBUG PAGE] Got error:', result.error);
+        // Check if it's an email confirmation error
+        if (result.error.message?.toLowerCase().includes('email') ||
+            result.error.message?.toLowerCase().includes('confirm')) {
+          setSuccess('Account created! Please check your email to confirm your account before signing in.');
+        } else {
+          setError(result.error.message || 'An error occurred during signup');
+        }
+        setLoading(false);
+      } else if (result.session) {
+        // User is immediately logged in (email confirmation disabled)
+        console.log('[DEBUG PAGE] Got session, redirecting to dashboard...');
+        // Wait a bit for Supabase to persist the session, then navigate
+        await new Promise(resolve => setTimeout(resolve, 100));
+        router.push('/dashboard');
       } else {
-        setError(result.error.message || 'An error occurred during signup');
+        // No error and no session - this shouldn't happen with email confirmation disabled
+        console.log('[DEBUG PAGE] No error and no session - showing email confirmation message');
+        setSuccess('Account created! Please check your email to confirm your account before signing in.');
+        setLoading(false);
       }
-      setLoading(false);
-    } else if (result.session) {
-      // User is immediately logged in (email confirmation disabled)
-      console.log('[DEBUG PAGE] Got session, redirecting to dashboard...');
-      router.push('/dashboard');
-    } else {
-      // No error and no session - this shouldn't happen with email confirmation disabled
-      console.log('[DEBUG PAGE] No error and no session - showing email confirmation message');
-      setSuccess('Account created! Please check your email to confirm your account before signing in.');
+    } catch (err) {
+      console.error('[DEBUG PAGE] Unexpected error:', err);
+      setError('An unexpected error occurred. Please try again.');
       setLoading(false);
     }
   };
