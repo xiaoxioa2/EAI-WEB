@@ -23,6 +23,12 @@ function DashboardContent() {
       color: 'bg-blue-600',
       cards: [
         {
+          title: 'Founder Portal',
+          description: 'Access your complete founder hub with matching, content, rooms, and resources',
+          icon: Users,
+          link: '/founder_portal',
+        },
+        {
           title: 'Apply to Accelerators',
           description: 'Submit your application to join our startup accelerator program',
           icon: TrendingUp,
@@ -39,12 +45,6 @@ function DashboardContent() {
           description: 'Get guidance from experienced experts in your industry',
           icon: UserCircle,
           link: '/founders#experts',
-        },
-        {
-          title: 'Connect with Investors',
-          description: 'Pitch your startup to potential investors',
-          icon: TrendingUp,
-          link: '/founders#investors',
         },
       ],
     },
@@ -96,7 +96,7 @@ function DashboardContent() {
           title: 'Accelerator Cohorts',
           description: 'See companies in our accelerator programs',
           icon: TrendingUp,
-          link: '/programs/cohorts',
+          link: '/programs',
         },
         {
           title: 'Investment Opportunities',
